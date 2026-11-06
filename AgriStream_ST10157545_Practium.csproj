@@ -10,7 +10,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.64.0" />
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.14" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Farm\" />
+    <Folder Include="Views\Image\" />
+    <Folder Include="Views\AerialData\" />
+    <Folder Include="Views\Report\" />
+    <Folder Include="Views\Recommendation\" />
+    <Folder Include="Views\SoilAssignment\" />
+    <Folder Include="Views\Video\" />
+    <Folder Include="Views\SoilTest\" />
+    <Folder Include="Views\SoilSample\" />
+    <Folder Include="Views\Site\" />
+    <Folder Include="Views\Project\" />
   </ItemGroup>
 
 </Project>
