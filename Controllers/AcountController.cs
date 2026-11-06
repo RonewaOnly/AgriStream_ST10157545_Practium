@@ -1,8 +1,10 @@
 ﻿using AgriStream_ST10157545_Practium.Data;
+using AgriStream_ST10157545_Practium.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace AgriStream_ST10157545_Practium.Controllers
@@ -13,13 +15,12 @@ namespace AgriStream_ST10157545_Practium.Controllers
         private const string AuthScheme = "Cookies";
         private const string InvalidCredentialsErrorMessage = "Invalid username or password.";
 
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _db;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly ILogger _logger;
 
         public AcountController(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher)
         {
-            _dbContext = dbContext;
+            _db = dbContext;
             _passwordHasher = passwordHasher;
         }
 
@@ -38,9 +39,9 @@ namespace AgriStream_ST10157545_Practium.Controllers
                 .Include(u => u.Role)
                 .SingleOrDefaultAsync(u => u.Username == model.Username);
             if (user is null ||
-                _hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
+                _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
-                ModelState.AddModelError(string.Empty, InvalidLoginMessage);
+                ModelState.AddModelError(string.Empty, InvalidCredentialsErrorMessage);
                 return View(model);
             }
             var claims = new List<Claim>
@@ -77,7 +78,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
             }
             var role = await _db.Roles.SingleAsync(r => r.RoleName == model.Role);
             var user = new User { Username = model.Username, RoleId = role.RoleId };
-            user.PasswordHash = _hasher.HashPassword(user, model.Password);
+            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Login));

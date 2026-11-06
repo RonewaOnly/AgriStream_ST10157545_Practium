@@ -47,6 +47,18 @@ namespace AgriStream_ST10157545_Practium.Service
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> TriggerIrrigationAsync(string deviceId, string fieldId, string action, CancellationToken ct)
+        {
+            var command = new IrrigationCommand(deviceId, fieldId, action);
+            return await TriggerIrrigationAsync(command, ct);
+        }
+
+        public async Task<bool> BlobServiceClient(string containerName, string blobName, Stream content, CancellationToken ct)
+        {
+            var url = $"api/blobs/{Uri.EscapeDataString(containerName)}/{Uri.EscapeDataString(blobName)}";
+            var response = await _http.PutAsync(url, new StreamContent(content), ct);
+            return response.IsSuccessStatusCode;
+        }
 
     }
 

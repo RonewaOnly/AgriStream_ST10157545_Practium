@@ -1,19 +1,22 @@
 ﻿using AgriStream_ST10157545_Practium.Models;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AgriStream_ST10157545_Practium.Controllers
 {
     [Authorize(Roles = AppRoles.AllRoles)]
 
-    public class ImageController
+    public class ImageController : Controller
     {
         private const string ContainerName = "drone-images";
         private const long MaxBytes = 20 * 1024 * 1024;
         private static readonly string[] AllowedExtensions = { ".jpg", ".jpeg", ".png", ".tif", ".tiff" };
         private readonly BlobServiceClient _blobs;
         private readonly ILogger _logger;
-        public ImagesController(BlobServiceClient blobs, ILogger logger)
+        public ImageController(BlobServiceClient blobs, ILogger logger)
         {
             _blobs = blobs;
             _logger = logger;

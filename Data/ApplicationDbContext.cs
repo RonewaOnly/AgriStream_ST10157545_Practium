@@ -5,9 +5,12 @@ namespace AgriStream_ST10157545_Practium.Data
 {
     public class ApplicationDbContext: DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
         }
+
 
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<User> Users => Set<User>();

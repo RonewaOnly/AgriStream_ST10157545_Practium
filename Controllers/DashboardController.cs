@@ -1,7 +1,10 @@
-﻿using AgriStream_ST10157545_Practium.Models;
+﻿using AgriStream_ST10157545_Practium.Data;
+using AgriStream_ST10157545_Practium.Models;
 using AgriStream_ST10157545_Practium.Service;
+using Azure.Data.Tables;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgriStream_ST10157545_Practium.Controllers
 {
@@ -13,12 +16,12 @@ namespace AgriStream_ST10157545_Practium.Controllers
         private const string TelemetryTable = "Telemetry";
         private const string StatusKey = "StatusMessage";
         private readonly IFunctionsClient _functions;
-        private readonly AppDbContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly TableServiceClient _tables;
         private readonly ILogger<DashboardController> _logger;
         public DashboardController(
             IFunctionsClient functions,
-            AppDbContext db,
+            ApplicationDbContext db,
             TableServiceClient tables,
             ILogger<DashboardController> logger)
         {
