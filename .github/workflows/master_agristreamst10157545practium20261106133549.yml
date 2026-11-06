@@ -17,7 +17,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Display repository structure
+        run: |
+          Write-Host "Repository root:"
+          Get-Location
 
+          Write-Host "Project files:"
+          Get-ChildItem -Path . -Recurse -Filter *.csproj |
+            Select-Object -ExpandProperty FullName
+
+          Write-Host "Solution files:"
+          Get-ChildItem -Path . -Recurse -Include *.sln,*.slnx |
+            Select-Object -ExpandProperty FullName
+        shell: pwsh
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
