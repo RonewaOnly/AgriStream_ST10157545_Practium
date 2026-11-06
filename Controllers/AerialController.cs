@@ -1,6 +1,8 @@
-﻿namespace AgriStream_ST10157545_Practium.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace AgriStream_ST10157545_Practium.Controllers
 {
-    public class AerialController
+    public class AerialController:Controller
     {
     }
 }
