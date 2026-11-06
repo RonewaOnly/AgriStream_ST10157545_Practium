@@ -10,6 +10,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\AerialData\**" />
+    <Compile Remove="Views\Farm\**" />
+    <Compile Remove="Views\Project\**" />
+    <Compile Remove="Views\Recommendation\**" />
+    <Compile Remove="Views\Report\**" />
+    <Compile Remove="Views\Site\**" />
+    <Compile Remove="Views\SoilAssignment\**" />
+    <Compile Remove="Views\SoilSample\**" />
+    <Compile Remove="Views\SoilTest\**" />
+    <Compile Remove="Views\Video\**" />
+    <Content Remove="Views\AerialData\**" />
+    <Content Remove="Views\Farm\**" />
+    <Content Remove="Views\Project\**" />
+    <Content Remove="Views\Recommendation\**" />
+    <Content Remove="Views\Report\**" />
+    <Content Remove="Views\Site\**" />
+    <Content Remove="Views\SoilAssignment\**" />
+    <Content Remove="Views\SoilSample\**" />
+    <Content Remove="Views\SoilTest\**" />
+    <Content Remove="Views\Video\**" />
+    <EmbeddedResource Remove="Views\AerialData\**" />
+    <EmbeddedResource Remove="Views\Farm\**" />
+    <EmbeddedResource Remove="Views\Project\**" />
+    <EmbeddedResource Remove="Views\Recommendation\**" />
+    <EmbeddedResource Remove="Views\Report\**" />
+    <EmbeddedResource Remove="Views\Site\**" />
+    <EmbeddedResource Remove="Views\SoilAssignment\**" />
+    <EmbeddedResource Remove="Views\SoilSample\**" />
+    <EmbeddedResource Remove="Views\SoilTest\**" />
+    <EmbeddedResource Remove="Views\Video\**" />
+    <None Remove="Views\AerialData\**" />
+    <None Remove="Views\Farm\**" />
+    <None Remove="Views\Project\**" />
+    <None Remove="Views\Recommendation\**" />
+    <None Remove="Views\Report\**" />
+    <None Remove="Views\Site\**" />
+    <None Remove="Views\SoilAssignment\**" />
+    <None Remove="Views\SoilSample\**" />
+    <None Remove="Views\SoilTest\**" />
+    <None Remove="Views\Video\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.64.0" />
     <PackageReference Include="Azure.Identity" Version="1.21.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.14" />
@@ -18,21 +61,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.14" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Farm\" />
-    <Folder Include="Views\Image\" />
-    <Folder Include="Views\AerialData\" />
-    <Folder Include="Views\Report\" />
-    <Folder Include="Views\Recommendation\" />
-    <Folder Include="Views\SoilAssignment\" />
-    <Folder Include="Views\Video\" />
-    <Folder Include="Views\SoilTest\" />
-    <Folder Include="Views\SoilSample\" />
-    <Folder Include="Views\Site\" />
-    <Folder Include="Views\Project\" />
   </ItemGroup>
 
 </Project>
