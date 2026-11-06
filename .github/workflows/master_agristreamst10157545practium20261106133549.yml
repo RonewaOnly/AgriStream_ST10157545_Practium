@@ -47,7 +47,7 @@ jobs:
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@02a81be5e4f7a7e8b8c5b7e4e8c7a9f7
         with:
           app-name: 'AgriStreamST10157545Practium20261106133549'
           slot-name: 'Production'
