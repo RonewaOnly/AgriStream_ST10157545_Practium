@@ -1,73 +1,31 @@
 
-name: Build and deploy ASP.NET Core app to Azure Web App - AgriStreamST10157545Practium
+name: Diagnose AgriStream Project Structure
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
-  build:
+  diagnose:
     runs-on: windows-latest
-
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Display repository structure
+
+      - name: Inspect repository
+        shell: pwsh
         run: |
-          Write-Host "Repository root:"
+          Write-Host "===== REPOSITORY ROOT ====="
           Get-Location
 
-          Write-Host "Project files:"
-          Get-ChildItem -Path . -Recurse -Filter *.csproj |
+          Write-Host "===== ROOT FILES AND FOLDERS ====="
+          Get-ChildItem -Force | Select-Object Name, Mode
+
+          Write-Host "===== ALL PROJECT FILES ====="
+          Get-ChildItem -Path . -Recurse -Filter *.csproj -File |
             Select-Object -ExpandProperty FullName
 
-          Write-Host "Solution files:"
-          Get-ChildItem -Path . -Recurse -Include *.sln,*.slnx |
+          Write-Host "===== ALL SOLUTION FILES ====="
+          Get-ChildItem -Path . -Recurse -File |
+            Where-Object { $_.Extension -in '.sln', '.slnx' } |
             Select-Object -ExpandProperty FullName
-        shell: pwsh
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.x'
-
-      - name: Restore dependencies
-        run: dotnet restore ./AgriStream_ST10157545_Practium/AgriStream_ST10157545_Practium.csproj
-
-      - name: Build ASP.NET Core application
-        run: dotnet build ./AgriStream_ST10157545_Practium/AgriStream_ST10157545_Practium.csproj --configuration Release --no-restore
-
-      - name: Publish ASP.NET Core application
-        run: dotnet publish ./AgriStream_ST10157545_Practium/AgriStream_ST10157545_Practium.csproj --configuration Release --no-build --output "${{ github.workspace }}/publish"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: agri-stream-webapp
-          path: ./publish/
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Download published artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: agri-stream-webapp
-          path: ./publish
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'AgriStreamST10157545Practium20261106133549'
-          slot-name: 'Production'
-          package: ./publish
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1305E47B52BA489D9DB7571CC4A4D312 }}
