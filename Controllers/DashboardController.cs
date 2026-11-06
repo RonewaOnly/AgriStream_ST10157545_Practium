@@ -1,4 +1,5 @@
-﻿using AgriStream_ST10157545_Practium.Service;
+﻿using AgriStream_ST10157545_Practium.Models;
+using AgriStream_ST10157545_Practium.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

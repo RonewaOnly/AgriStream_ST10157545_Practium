@@ -15,6 +15,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly ILogger _logger;
 
         public AcountController(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher)
         {
@@ -37,7 +38,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
                 .Include(u => u.Role)
                 .SingleOrDefaultAsync(u => u.Username == model.Username);
             if (user is null ||
-                _hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Fa
+                _hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
                 ModelState.AddModelError(string.Empty, InvalidLoginMessage);
                 return View(model);

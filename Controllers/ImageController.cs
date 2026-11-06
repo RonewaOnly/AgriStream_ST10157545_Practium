@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AgriStream_ST10157545_Practium.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgriStream_ST10157545_Practium.Controllers
@@ -11,9 +12,11 @@ namespace AgriStream_ST10157545_Practium.Controllers
         private const long MaxBytes = 20 * 1024 * 1024;
         private static readonly string[] AllowedExtensions = { ".jpg", ".jpeg", ".png", ".tif", ".tiff" };
         private readonly BlobServiceClient _blobs;
-        public ImagesController(BlobServiceClient blobs)
+        private readonly ILogger _logger;
+        public ImagesController(BlobServiceClient blobs, ILogger logger)
         {
             _blobs = blobs;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken ct)
@@ -46,7 +49,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
             await container.CreateIfNotExistsAsync(cancellationToken: ct);
             var blobName = $"{Guid.NewGuid()}{extension}";
             await using var stream = image.OpenReadStream();
-            await container.GetBlobClient(blobName).UploadAsync(stream, overwrite: false, cancellationToken: ct)
+            await container.GetBlobClient(blobName).UploadAsync(stream, overwrite: false, cancellationToken: ct);
             TempData["StatusMessage"] = $"Uploaded {blobName}. The blob-trigger function will log it.";
             return RedirectToAction(nameof(Index));
         }

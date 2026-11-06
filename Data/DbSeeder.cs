@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AgriStream_ST10157545_Practium.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace AgriStream_ST10157545_Practium.Data
@@ -8,7 +10,7 @@ namespace AgriStream_ST10157545_Practium.Data
         public static async Task SeedAsync(IServiceProvider services, IConfiguration configuration)
         {
             using var scope = services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
             await db.Database.EnsureCreatedAsync();
             if (!await db.Roles.AnyAsync())
