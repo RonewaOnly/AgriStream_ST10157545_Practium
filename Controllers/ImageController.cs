@@ -15,8 +15,8 @@ namespace AgriStream_ST10157545_Practium.Controllers
         private const long MaxBytes = 20 * 1024 * 1024;
         private static readonly string[] AllowedExtensions = { ".jpg", ".jpeg", ".png", ".tif", ".tiff" };
         private readonly BlobServiceClient _blobs;
-        private readonly ILogger _logger;
-        public ImageController(BlobServiceClient blobs, ILogger logger)
+        private readonly ILogger<ImageController> _logger;
+        public ImageController(BlobServiceClient blobs, ILogger<ImageController> logger)
         {
             _blobs = blobs;
             _logger = logger;
