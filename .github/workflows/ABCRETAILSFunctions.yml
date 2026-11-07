@@ -76,7 +76,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
         with:
-          client-id: ${{ vars.ABCRETAILSFunctions_CLIENT_ID_38F9 }}
+          client-id: ${{ vars.ABCRETAILSFunctions_CLIENT_ID_38F9 }} 
           tenant-id: ${{ vars.ABCRETAILSFunctions_TENANT_ID_38F9 }}
           subscription-id: ${{ vars.ABCRETAILSFunctions_SUBSCRIPTION_ID_38F9 }}
 
