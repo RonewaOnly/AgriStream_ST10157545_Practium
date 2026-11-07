@@ -44,7 +44,7 @@ jobs:
       - name: Restore
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}/AgriStream_ST10157545_Practium.API.csproj"
 
-      - name: Build
+      - name: Build status
         run: dotnet build "${{ env.WORKING_DIRECTORY }}/AgriStream_ST10157545_Practium.API.csproj" --configuration ${{ env.CONFIGURATION }} --no-restore
 
       - name: Publish
