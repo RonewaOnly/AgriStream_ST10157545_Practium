@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AgriStream_ST10157545_Practium.API": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7217",
+      "launchBrowser": false
+    }
+  }
+}
