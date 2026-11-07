@@ -1,0 +1,87 @@
+name: Build and deploy .NET Core application to Function App ABCRETAILSFunctions
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_NAME: ABCRETAILSFunctions
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: ./AgriStream_ST10157545_Practium.API/published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 10.0.x
+  WORKING_DIRECTORY: ./AgriStream_ST10157545_Practium.API
+
+jobs:
+
+  build:
+    environment: ABCRETAILSFunctions_Env
+    runs-on: windows-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+      - name: Verify Functions project
+        shell: pwsh
+        run: |
+          Write-Host "Current directory:"
+          Get-Location
+
+          Write-Host "Functions project:"
+          Get-ChildItem "${{ env.WORKING_DIRECTORY }}" -Filter *.csproj
+
+      - name: Restore
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}/AgriStream_ST10157545_Practium.API.csproj"
+
+      - name: Build
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}/AgriStream_ST10157545_Practium.API.csproj" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: Publish
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}/AgriStream_ST10157545_Practium.API.csproj" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: functionapp
+          path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
+  deploy:
+    environment: ABCRETAILSFunctions_Env
+    runs-on: windows-latest
+    needs: build
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: functionapp
+          path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
+      - name: Azure Login
+        uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+        with:
+          client-id: ${{ vars.ABCRETAILSFunctions_CLIENT_ID_38F9 }} 
+          tenant-id: ${{ vars.ABCRETAILSFunctions_TENANT_ID_38F9 }}
+          subscription-id: ${{ vars.ABCRETAILSFunctions_SUBSCRIPTION_ID_38F9 }}
+
+      - name: Deploy to Azure Function App
+        uses: Azure/functions-action@bc63708cc6539760eea18d8a7de4ce8ef5fdf593 # v1.5.6
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}

@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<h1>AgriStream IoT</h1>
+<p class="lead">Smart monitoring for large-scale commercial farms: live soil telemetry, drone imagery and irrigation control.</p>
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <a class="btn btn-success" asp-controller="Account" asp-action="Login">Log in to your dashboard</a>
+}

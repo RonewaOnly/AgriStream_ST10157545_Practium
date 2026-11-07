@@ -1,0 +1,61 @@
+
+name: Build and deploy AgriStream to Azure Web App
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs: 
+  build:
+    runs-on: windows-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./AgriStream_ST10157545_Practium.csproj
+
+      - name: Build application
+        run: dotnet build ./AgriStream_ST10157545_Practium.csproj --configuration Release --no-restore
+
+      - name: Publish application
+        run: dotnet publish ./AgriStream_ST10157545_Practium.csproj --configuration Release --no-build --output ./publish
+
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: agri-stream-webapp
+          path: ./publish/
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Download deployment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: agri-stream-webapp
+          path: ./publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'AgriStreamST10157545Practium20261106133549'
+          slot-name: 'Production'
+          package: ./publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1305E47B52BA489D9DB7571CC4A4D312 }}

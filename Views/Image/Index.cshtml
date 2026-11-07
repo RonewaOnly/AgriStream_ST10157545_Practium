@@ -1,0 +1,21 @@
+﻿@model ImagesViewModel
+@{
+    ViewData["Title"] = "Drone images";
+}
+<h1>Drone images</h1>
+
+<form asp-action="Upload" method="post" enctype="multipart/form-data" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="file" name="image" class="form-control" accept=".jpg,.jpeg,.png,.tif,.tiff" aria-label="Drone image" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-success">Upload</button>
+    </div>
+</form>
+
+<ul class="list-group">
+    @foreach (var name in Model.BlobNames)
+    {
+        <li class="list-group-item">@name</li>
+    }
+</ul>

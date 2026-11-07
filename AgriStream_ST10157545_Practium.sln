@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgriStream_ST10157545_Practium", "AgriStream_ST10157545_Practium\AgriStream_ST10157545_Practium.csproj", "{116955C2-953F-4169-925B-6E2BDF1217DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgriStream_ST10157545_Practium.API", "AgriStream_ST10157545_Practium.API\AgriStream_ST10157545_Practium.API.csproj", "{6202E4FB-CF54-4804-8053-5EF80A2A8983}"
@@ -41,6 +42,12 @@ Global
 		{6202E4FB-CF54-4804-8053-5EF80A2A8983}.Release|x64.Build.0 = Release|Any CPU
 		{6202E4FB-CF54-4804-8053-5EF80A2A8983}.Release|x86.ActiveCfg = Release|Any CPU
 		{6202E4FB-CF54-4804-8053-5EF80A2A8983}.Release|x86.Build.0 = Release|Any CPU
+=======
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+>>>>>>> 5bd508e58ed43010f2d1523cf859261d74c01605
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

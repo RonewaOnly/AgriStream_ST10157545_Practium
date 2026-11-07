@@ -1,0 +1,66 @@
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Field dashboard";
+}
+<h1>Field dashboard: @Model.FieldId</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input name="fieldId" value="@Model.FieldId" class="form-control" aria-label="Field id" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-success">Load field</button>
+    </div>
+</form>
+
+<h2 class="h4">Devices</h2>
+<table class="table table-sm">
+    <thead>
+        <tr><th>Device</th><th>Status</th><th>Last command</th><th>Updated (UTC)</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var device in Model.Devices)
+        {
+            <tr>
+                <td>@device.DeviceId</td>
+                <td>@device.OperationalStatus</td>
+                <td>@device.LastCommand</td>
+                <td>@device.LastUpdatedUtc.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>
+                    <form asp-action="Irrigate" method="post" class="d-inline">
+                        <input type="hidden" name="deviceId" value="@device.DeviceId" />
+                        <input type="hidden" name="fieldId" value="@Model.FieldId" />
+                        <button type="submit" name="command" value="Start" class="btn btn-sm btn-success">Trigger irrigation</button>
+                        <button type="submit" name="command" value="Stop" class="btn btn-sm btn-outline-secondary">Stop</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2 class="h4">Latest telemetry</h2>
+<table class="table table-striped table-sm">
+    <thead>
+        <tr><th>Device</th><th>Soil moisture (%)</th><th>Temperature (°C)</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var reading in Model.Readings)
+        {
+            <tr>
+                <td>@reading.DeviceId</td>
+                <td>@reading.SoilMoisture</td>
+                <td>@reading.Temperature</td>
+                <td>@reading.Timestamp?.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole(AppRoles.Admin))
+{
+    <form asp-action="SeedTelemetry" method="post">
+        <input type="hidden" name="fieldId" value="@Model.FieldId" />
+        <button type="submit" class="btn btn-outline-dark btn-sm">Add demo telemetry</button>
+    </form>
+}
