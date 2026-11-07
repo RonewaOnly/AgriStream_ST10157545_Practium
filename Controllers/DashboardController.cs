@@ -35,6 +35,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
         {
             var field = string.IsNullOrWhiteSpace(fieldId) ? DefaultField : fieldId;
             IReadOnlyList<TelemetryReading> readings;
+            TempData[StatusKey] ="HELLO";
             try
             {
                 readings = await _functions.GetTelemetryAsync(field, ct);
