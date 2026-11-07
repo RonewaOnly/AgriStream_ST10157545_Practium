@@ -13,22 +13,24 @@ namespace AgriStream_ST10157545_Practium.Service
 
     public class FunctionsClient : IFunctionsClient
     {
-        private const string KeyHeader = "x-functions-key";
+        //private const string KeyHeader = "x-functions-key";
         private readonly HttpClient _http;
 
 
         public FunctionsClient(HttpClient http, IConfiguration configuration)
         {
+            var secret = configuration["Functions:SharedSecret"];
+
             _http = http;
             var baseUrl = configuration["Functions:BaseUrl"]
                 ?? throw new InvalidOperationException("Functions:BaseUrl is not configured.");
             _http.BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/");
 
 
-            var key = configuration["Functions:Key"];
-            if (!string.IsNullOrWhiteSpace(key))
+            //var key = configuration["Functions:Key"];
+            if (!string.IsNullOrWhiteSpace(secret))
             {
-                _http.DefaultRequestHeaders.Add(KeyHeader, key);
+                _http.DefaultRequestHeaders.Add("x-api-key", secret);
             }
         }
 
