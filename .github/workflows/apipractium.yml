@@ -49,14 +49,10 @@ jobs:
       with:
         name: functionapp
         path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    - name: Azure Login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ vars.apipractium_CLIENT_ID_7F26 }}
-        tenant-id: ${{ vars.apipractium_TENANT_ID_7F26 }}
-        subscription-id: ${{ vars.apipractium_SUBSCRIPTION_ID_7F26 }}
+  
     - name: Deploy to Azure Function App
       uses: Azure/functions-action@v1
       with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          app-name: ABCRETAILSFunctions
+          package: ./AgriStream_ST10157545_Practium.API/published
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
