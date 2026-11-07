@@ -18,8 +18,8 @@ builder.Services.AddSingleton(new QueueServiceClient(
     storage,
     new QueueClientOptions { MessageEncoding = QueueMessageEncoding.Base64 }));
 
-builder.Services
+/*builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
-    .ConfigureFunctionsApplicationInsights();
+    .ConfigureFunctionsApplicationInsights();*/
 
 builder.Build().Run();
