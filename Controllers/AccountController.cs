@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace AgriStream_ST10157545_Practium.Controllers
 {
-    public class AcountController : Controller
+    public class AccountController : Controller
     {
 
         private const string AuthScheme = "Cookies";
@@ -18,7 +18,7 @@ namespace AgriStream_ST10157545_Practium.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AcountController(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher)
+        public AccountController(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher)
         {
             _db = dbContext;
             _passwordHasher = passwordHasher;
