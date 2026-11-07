@@ -16,6 +16,7 @@ namespace AgriStream_ST10157545_Practium.API
         private readonly TableServiceClient _tables;
         private readonly ILogger<ImageUploadedFunction> _logger;
 
+
         public ImageUploadedFunction(TableServiceClient tables, ILogger<ImageUploadedFunction> logger)
         {
             _tables = tables;

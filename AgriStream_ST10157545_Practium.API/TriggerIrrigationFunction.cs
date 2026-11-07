@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Storage.Queues;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace AgriStream_ST10157545_Practium.API
 {
@@ -16,17 +17,21 @@ namespace AgriStream_ST10157545_Practium.API
 
         private readonly QueueServiceClient _queues;
 
-
-        public TriggerIrrigationFunction(QueueServiceClient queues)
+        private readonly IConfiguration _config; // Configuration is injected into the constructor and stored in a private field.
+        public TriggerIrrigationFunction(QueueServiceClient queues, IConfiguration config)
         {
             _queues = queues;
+            _config = config;
         }
 
 
         [Function(nameof(TriggerIrrigationFunction))]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "irrigation")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "irrigation")] HttpRequest req)
         {
+            if (!ApiKeyGuard.IsValid(req, _config["ApiSecret"]))
+                return new UnauthorizedResult();
+
             IrrigationCommand? command;
             try
             {
